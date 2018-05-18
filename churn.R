@@ -1,0 +1,7 @@
+churn=read.csv(file.choose())
+str(churn)
+churnlogit=glm(Churn~Account.Length+Voice.Mail.Plan+Num.of.Voice.mail.Messages+Number.Customer.Service.calls,data=churn,family = "binomial")
+summary(churnlogit)
+churnpredict=predict(churnlogit,type="response")
+churnpredict1=ifelse(churnpredict>=0.5,1,0)
+confusionMatrix(churnpredict1,churn$Churn)

@@ -1,0 +1,17 @@
+library(arules)
+groceries <- read.transactions(file.choose(),sep=",")
+summary(groceries)
+inspect(groceries[1:5])
+itemFrequency(groceries[, 1:3])
+itemFrequencyPlot(groceries, support = 0.1)
+itemFrequencyPlot(groceries, topN = 20)
+image(sample(groceries, 100))
+apriori(groceries)
+groceryrules <- apriori(groceries, parameter = list(support = 0.006, confidence = 0.25, minlen = 2))
+groceryrules
+summary(groceryrules)
+inspect(groceryrules[1:3])
+inspect(sort(groceryrules, by = "lift")[1:5])
+berryrules <- subset(groceryrules, items %in% "berries")  ## %in% means contains the word
+inspect(berryrules)
+write(groceryrules, file = "D:/Analytics/groceryrules.csv", sep = ",", quote = TRUE, row.names = FALSE)
